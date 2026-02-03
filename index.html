@@ -152,10 +152,13 @@
       right: 20px;
       top: 50%;
       transform: translateY(-50%);
+      min-width: 110px;
+      white-space: nowrap;
+      text-align: center;
     }
 
     #noBtn:hover {
-      transform: translateY(-50%) scale(1.05);
+      filter: brightness(1.05);
     }
 
     .gift-icons {
@@ -181,7 +184,7 @@
 
     <div class="buttons">
       <button id="yesBtn">YES 💖</button>
-      <button id="noBtn">NO 😜</button>
+      <button id="noBtn">NO</button>
     </div>
 
     <div class="gift-icons">🌹 🍫 🎁 💝 🌸</div>
@@ -223,25 +226,10 @@
       noBtn.style.left = `${x}px`;
       noBtn.style.top = `${y}px`;
       
-      // Add smooth transition
-      noBtn.style.transition = "all 0.15s ease-out";
-      
-      // Random rotation for fun effect
-      const rotation = Math.random() * 30 - 15;
-      noBtn.style.transform = `rotate(${rotation}deg) scale(1.1)`;
-      
-      // Change button text randomly
-      const noTexts = ["NO 😜", "Nah 😏", "Nope 🙃", "Try again 😝", "Not happening 🤪", "Maybe... NO! 😂", "Are you sure? 🤔", "Think again! 💭"];
-      noBtn.textContent = noTexts[Math.floor(Math.random() * noTexts.length)];
-      
-      // Change button color randomly
-      const colors = [
-        "linear-gradient(45deg, #ff6b6b, #ee5a24)",
-        "linear-gradient(45deg, #f39c12, #e67e22)",
-        "linear-gradient(45deg, #e74c3c, #c0392b)",
-        "linear-gradient(45deg, #9b59b6, #8e44ad)"
-      ];
-      noBtn.style.background = colors[Math.floor(Math.random() * colors.length)];
+      // Add smooth transition (only position)
+      noBtn.style.transition = "left 0.12s ease-out, top 0.12s ease-out";
+
+      noBtn.textContent = 'NO';
     }
 
     // Prevent click event and move button immediately
@@ -253,18 +241,28 @@
     });
 
     // Multiple event listeners to ensure it always moves
+    noBtn.addEventListener("pointerenter", moveNoButton);
+    noBtn.addEventListener("pointermove", moveNoButton);
+    noBtn.addEventListener("pointerdown", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      moveNoButton();
+      return false;
+    });
     noBtn.addEventListener("mouseenter", moveNoButton);
-    noBtn.addEventListener("mouseover", moveNoButton);
     noBtn.addEventListener("mousemove", moveNoButton);
-    noBtn.addEventListener("touchstart", moveNoButton);
-    noBtn.addEventListener("touchmove", moveNoButton);
-
-    // Also move it periodically for extra fun
-    setInterval(() => {
-      if (Math.random() > 0.6) {
-        moveNoButton();
-      }
-    }, 1500);
+    noBtn.addEventListener("mousedown", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      moveNoButton();
+      return false;
+    });
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      moveNoButton();
+      return false;
+    }, { passive: false });
 
     document.getElementById("yesBtn").addEventListener("click", () => {
       // Create ultra-premium celebration effect for Chips
@@ -274,7 +272,7 @@
           <h1 style="color: #e91e63; font-size: 2.5em; margin-bottom: 20px; background: linear-gradient(45deg, #e91e63, #9c27b0, #ff6b6b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Yayyyy Chips! 💖</h1>
           <p style="font-size: 1.4em; color: #666; margin-bottom: 15px;">I knew it! 😍 Happy Valentine's Day!</p>
           <p style="font-size: 1.2em; color: #e91e63; font-weight: bold; margin-bottom: 20px;">You're the best Valentine ever! 💕</p>
-          <div style="font-size: 3em; margin: 25px 0; animation: pulse 1s infinite;">🍫�💐�🌹💝🎊</div>
+          <div style="font-size: 3em; margin: 25px 0; animation: pulse 1s infinite;">🍫🎁💐🌹💝🎊</div>
           <p style="color: #9c27b0; font-style: italic; font-size: 1.1em;">Lots of love, hugs, chocolates & roses for you! 🌹</p>
           <div style="margin-top: 20px; font-size: 2em; animation: spin 2s linear infinite;">💖</div>
         </div>
